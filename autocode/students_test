@@ -50,10 +50,11 @@ func Test_People_Less(t *testing.T) {
 	lTestPeople := People{
 		Person{firstName: "Ivan", lastName: "Petrov", birthDay: time.Date(2020, 1, 1, 0, 0, 0, 0, time.UTC)},
 		Person{firstName: "Ivan", lastName: "Petrov", birthDay: time.Date(2021, 1, 1, 0, 0, 0, 0, time.UTC)},
+		Person{firstName: "Ivan", lastName: "Ivanov", birthDay: time.Date(2020, 1, 1, 0, 0, 0, 0, time.UTC)},
 		Person{firstName: "Alex", lastName: "Petrov", birthDay: time.Date(2020, 1, 1, 0, 0, 0, 0, time.UTC)},
 	}
 
-	if lTestPeople.Less(0, 1) || lTestPeople.Less(0, 2){
+	if lTestPeople.Less(0, 1) || lTestPeople.Less(0, 2) || lTestPeople.Less(0, 3){
 		t.Error("Less failed")
 	}
 }
@@ -82,13 +83,23 @@ func Test_Matrix_New(t *testing.T) {
 		t.Error("New Matrix failed (Atoi)")
 	}
 
+	_, err = New("1\n2\n3\n4")
+	if err != nil {
+		t.Error("New Matrix failed")
+	}
+
+	_, err = New("1 2 3 4")
+	if err != nil {
+		t.Error("New Matrix failed")
+	}
+
 	lMatrix, err = New("1 2\n3 4")
 	if err != nil {
 		t.Error("New Matrix failed")
 	}
 
 	if lMatrix.Set(0, 4, 4){
-		t.Error("Matrix Set(4, 4, 4) failed")
+		t.Error("Matrix Set(0, 4, 4) failed")
 	}
 
 	if !lMatrix.Set(0, 0, 5){
@@ -97,5 +108,4 @@ func Test_Matrix_New(t *testing.T) {
 
 	lMatrix.Cols()
 	lMatrix.Rows()
-
 }
